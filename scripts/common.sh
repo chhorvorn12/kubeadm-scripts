@@ -82,6 +82,7 @@ sudo sysctl --system
 # - curl: Command-line tool for transferring data with URLs.
 # - gpg: GNU Privacy Guard, a tool for secure communication and data storage.
 sudo apt-get update -y
+sudo dpkg --configure -a
 sudo apt-get install -y apt-transport-https ca-certificates curl gpg
 
 # Install CRI-O Runtime

@@ -32,7 +32,7 @@ sudo kubeadm config images pull
 # It checks the value of the PUBLIC_IP_ACCESS variable to determine whether to use a private or public IP address for the master node.
 #
 # If PUBLIC_IP_ACCESS is "false":
-# - It retrieves the private IP address of the ens33 network interface.
+# - It retrieves the private IP address of the ens3 network interface.
 # - It runs kubeadm init with the private IP address as the apiserver-advertise-address and apiserver-cert-extra-sans.
 #
 # If PUBLIC_IP_ACCESS is "true":
@@ -48,7 +48,7 @@ sudo kubeadm config images pull
 #
 # Note: The script ignores preflight errors related to Swap.
 if [[ "$PUBLIC_IP_ACCESS" == "false" ]]; then
-    MASTER_PRIVATE_IP=$(ip addr show ens33 | awk '/inet / {print $2}' | cut -d/ -f1)
+    MASTER_PRIVATE_IP=$(ip addr show ens3 | awk '/inet / {print $2}' | cut -d/ -f1)
     sudo kubeadm init --apiserver-advertise-address="$MASTER_PRIVATE_IP" --apiserver-cert-extra-sans="$MASTER_PRIVATE_IP" --pod-network-cidr="$POD_CIDR" --node-name "$NODENAME" --ignore-preflight-errors Swap
 elif [[ "$PUBLIC_IP_ACCESS" == "true" ]]; then
     MASTER_PUBLIC_IP=$(curl ifconfig.me && echo "")

@@ -68,3 +68,24 @@ sudo chown "$(id -u)":"$(id -g)" "$HOME"/.kube/config
 
 kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
 
+
+# Install MetalLB
+kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.3/manifests/namespace.yaml
+kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.3/manifests/metallb.yaml
+
+# Configure MetalLB with a Layer 2 configuration
+cat <<EOF | kubectl apply -f -
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: metallb-system
+  name: config
+data:
+  config: |
+    address-pools:
+    - name: default
+      protocol: layer2
+      addresses:
+      - 192.168.1.240-192.168.1.250
+EOF
+

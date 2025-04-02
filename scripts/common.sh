@@ -193,13 +193,13 @@ sudo apt-get update -y
 # Install jq, a command-line JSON processor
 sudo apt-get install -y jq
 
-# Retrieves the local IP address of the ens33 interface and assigns it to the local_ip variable.
+# Retrieves the local IP address of the ens3 interface and assigns it to the local_ip variable.
 # This IP address is then used to configure the kubelet.
 # 
 # The command uses 'ip' to get the JSON representation of the network interfaces,
-# 'jq' to parse the JSON and extract the IP address of the 'inet' family for the 'ens33' interface.
+# 'jq' to parse the JSON and extract the IP address of the 'inet' family for the 'ens3' interface.
 # Retrieve the local IP address of the eth0 interface and set it for kubelet
-local_ip="$(ip --json addr show ens33 | jq -r '.[0].addr_info[] | select(.family == "inet") | .local')"
+local_ip="$(ip --json addr show ens3 | jq -r '.[0].addr_info[] | select(.family == "inet") | .local')"
 
 # This script writes the local IP address to the kubelet default configuration file.
 # It uses a here document to create or overwrite the /etc/default/kubelet file with the
